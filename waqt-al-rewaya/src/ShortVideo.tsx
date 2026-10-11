@@ -1,7 +1,7 @@
 import React from "react";
 import { Audio } from "@remotion/media";
 import { AbsoluteFill, Sequence, interpolate, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { Bed, Cue, SoundDesign } from "./audio/SoundDesign";
+import { Bed, Cue, Mix, MixId, SELECTED_MIX, SoundDesign } from "./audio/SoundDesign";
 import { Grain } from "./components/layers";
 import { Captions, ReconstructionTag, TimedText } from "./components/text";
 import { TEXT_FONT, TITLE_FONT } from "./fonts";
@@ -38,13 +38,14 @@ const SHOTS = [
   { name: "End card", from: 32.5, to: END, t0: 0, Comp: S10EndCard, fade: 16, extra: { variant: "short" as const } },
 ];
 
-const BEDS: Bed[] = [
+// V1 "cinematic" sound design (kept, not selected).
+const CINEMATIC_BEDS: Bed[] = [
   { name: "ocean", src: "ocean_bed.wav", keys: [[0, 0.2], [5.7, 0.14], [5.9, 0.2], [14.0, 0.15], [14.2, 0.08], [18.6, 0.1], [18.8, 0.2], [22.4, 0.15], [22.6, 0.08], [24.5, 0.05], [25.1, 0], [26.0, 0], [26.6, 0.2], [35, 0.2], [36, 0]] },
   { name: "wind", src: "wind_bed.wav", keys: [[0, 0.36], [5.7, 0.36], [5.9, 0.12], [14.0, 0.12], [14.2, 0.22], [18.6, 0.22], [18.8, 0.15], [22.4, 0.15], [22.6, 0.06], [25.1, 0], [26.0, 0], [26.6, 0.38], [35, 0.3], [36, 0]] },
   { name: "drone", src: "drone_bed.wav", keys: [[0, 0.15], [v(15.6), 0.3], [v(16.4), 0.15], [v(23), 0.2], [v(24.45), 0.28], [v(24.6), 0], [v(25.9), 0], [v(26.5), 0.22], [v(34.0), 0.3], [v(36.2), 0.38], [v(36.6), 0], [26.0, 0], [26.6, 0.25], [32.0, 0.38], [33.0, 0.3], [36, 0]] },
 ];
 
-const CUES: Cue[] = [
+const CINEMATIC_CUES: Cue[] = [
   { name: "hook hit", src: "low_hit.wav", at: 0.0, volume: 0.5 },
   { name: "flame out", src: "flame_out.wav", at: v(BEATS.lightOut - 0.03), volume: 0.75 },
   { name: "ship whistle", src: "foghorn.wav", at: v(17.5), volume: 0.45 },
@@ -53,6 +54,13 @@ const CUES: Cue[] = [
   { name: "vanished hit", src: "low_hit.wav", at: v(36.62), volume: 0.55 },
   { name: "end hit", src: "low_hit.wav", at: 32.55, volume: 0.55 },
 ];
+
+// V2 "narration-first": the voice enters at 0.6 s, too soon for a natural ambience fade, so the
+// short carries the narration excerpts only.
+const MIXES: Record<MixId, Mix> = {
+  "narration-first": { beds: [], cues: [] },
+  cinematic: { beds: CINEMATIC_BEDS, cues: CINEMATIC_CUES },
+};
 
 // Captions: only phrases fully inside an excerpt.
 const CAPTIONS: TimedText[] = PHRASES.flatMap((p) => {
@@ -77,7 +85,7 @@ const Hook: React.FC = () => {
   );
 };
 
-export const ShortVideo: React.FC = () => (
+export const ShortVideo: React.FC<{ mix?: MixId }> = ({ mix = SELECTED_MIX }) => (
   <AbsoluteFill style={{ background: "black" }}>
     {SHOTS.map(({ name, from, to, t0, Comp, fade, extra }) => {
       const start = f(from) - fade;
@@ -111,6 +119,6 @@ export const ShortVideo: React.FC = () => (
         </Sequence>
       );
     })}
-    <SoundDesign beds={BEDS} cues={CUES} />
+    <SoundDesign {...MIXES[mix]} />
   </AbsoluteFill>
 );

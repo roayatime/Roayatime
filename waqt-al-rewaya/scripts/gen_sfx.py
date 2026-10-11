@@ -176,6 +176,21 @@ def foghorn(seconds=7.0):
     return norm(reverb(x, 4.0, mix=0.55, damp=900)[:n], -6)
 
 
+def foghorn_soft(seconds=3.8):
+    """Short, distant foghorn whose reverb tail is fully decayed inside the file (narration-first intro)."""
+    n = int(seconds * SR)
+    t = np.arange(n) / SR
+    env = np.clip(t / 0.5, 0, 1) * np.clip((2.0 - t) / 0.8, 0, 1)
+    f0 = 88 * (1 + 0.003 * np.sin(2 * np.pi * 4.0 * t))
+    ph = 2 * np.pi * np.cumsum(f0) / SR
+    x = sum(np.sin(k * ph) / k**1.4 for k in range(1, 9))
+    x = fft_filter(x * env, hi=450)
+    y = reverb(x, 1.6, mix=0.5, damp=700)[:n]
+    fo = int(0.6 * SR)
+    y[-fo:] *= np.cos(np.linspace(0, np.pi / 2, fo)) ** 2
+    return norm(y, -6)
+
+
 def knocks(seconds=3.0, times=(0.0, 0.42, 0.84)):
     n = int(seconds * SR)
     t = np.arange(n) / SR
@@ -206,5 +221,6 @@ if __name__ == "__main__":
     write("low_hit.wav", low_hit())
     write("flame_out.wav", flame_out())
     write("foghorn.wav", foghorn())
+    write("foghorn_soft.wav", foghorn_soft())
     write("knocks.wav", knocks())
     write("whoosh.wav", whoosh())

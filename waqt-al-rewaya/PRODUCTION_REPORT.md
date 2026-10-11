@@ -182,3 +182,73 @@ Options, from least to most invasive. The repository owner decides.
 
 To keep the project reproducible without committing the voice, store `source/test1.m4a` outside Git and
 copy it in before running `npm run assets`. `scripts/edit_narration.py` checks its SHA-256 before every edit.
+
+## 8. V2 — narration-first mix (audience feedback)
+
+Viewers found the continuous sound design distracting. V2 makes the narrator's voice the only sound
+under the narration. The V1 masters are kept unchanged; V2 files have new names:
+
+- `deliverables/v2/waqt-al-rewaya_flannan_full_1080p_v2_narration-first.mp4`
+- `deliverables/v2/waqt-al-rewaya_flannan_short_1080x1920_v2_narration-first.mp4`
+- `deliverables/v2/review/*_review.mp4`: bitrate-reduced copies for chat review (under 30 MiB)
+
+### What changed
+
+| Element | V1 (cinematic) | V2 (narration-first) |
+|---|---|---|
+| Ocean bed | entire video, automated | **full only, 0–4.4 s**: fades in 0–0.6 s, out 2.8–4.4 s, then removed from the timeline |
+| Foghorn | 7 s ship whistle during the ship scene | **full only**: one new soft, distant 3.8 s foghorn at 0.5 s; its tail fully decays by ~3.5 s |
+| Wind bed, drone bed | entire video | removed |
+| Title whoosh, title/vanished/end hits, thunder | yes | removed |
+| Flame-out, riser, door knocks | yes | removed |
+| Short: hook hit, all beds and cues | yes | removed: the voice starts at 0.6 s, too soon for a natural fade |
+| Narration | cleaned narration, unchanged | **same cleaned narration, unchanged**: same edit, timing and pauses |
+| Rain, music | none in V1 either (rain is visual only, no music was ever used) | none |
+
+Mix selection lives in `src/audio/SoundDesign.tsx` (`SELECTED_MIX = "narration-first"`). The V1
+design is still in `FullVideo.tsx` / `ShortVideo.tsx` as the `cinematic` mix, and can be rendered with
+`--props='{"mix":"cinematic"}'`.
+
+### How V2 was produced
+
+1. `npm run render:full:mix` / `render:short:mix`: Remotion audio-only renders of the same compositions
+   (same timeline, so it is frame-accurate with the picture).
+2. `scripts/remix_audio.sh`: the **video stream is copied bit-for-bit** from the V1 masters (MD5 of the
+   V1 and V2 video streams are identical, so visuals, captions and titles are unchanged), plus the new
+   audio with one static gain of −2.8 dB, encoded as AAC 256 kb/s. No compressor and no limiter are used.
+
+### Loudness note
+
+The cleaned narration file is mono and measures −17.2 LUFS. In a stereo video the same mono voice is
+played on both channels, and EBU R128 measures that 3 dB louder (−14.2 LUFS). To land the delivered
+stereo programme on the requested −17 LUFS, one static −2.8 dB gain was applied. This does not change
+the voice's dynamics, pitch or pacing.
+
+### Measured results (final V2 files)
+
+| | Full V2 | Short V2 |
+|---|---|---|
+| Video | 1920×1080 16:9, 30 fps, H.264 (copied from V1) | 1080×1920 9:16, 30 fps, H.264 (copied from V1) |
+| Duration | 60.500 s | 36.000 s |
+| Audio | AAC-LC 48 kHz stereo, ~223 kb/s | AAC-LC 48 kHz stereo, ~221 kb/s |
+| Size | 60,100,213 bytes | 50,509,316 bytes |
+| Integrated loudness | **−17.0 LUFS** | **−17.1 LUFS** |
+| True peak | **−4.3 dBTP** | **−4.2 dBTP** |
+| LRA | 5.2 LU | 4.5 LU |
+| Full decode | no errors | no errors |
+
+**No residual effects under the voice.** The cleaned narration was subtracted from the rendered mix,
+aligned to the sample:
+- Full video, 5.0–54.4 s: residual **−96.1 dBFS**, worst 0.5 s window −95.2 dBFS, against narration at −18.5 dBFS.
+- Short, both excerpts: residual −95.9 / −96.6 dBFS.
+
+This is numerical silence: nothing but the narration is present.
+
+**Fades.** The full intro rises from −53 dBFS to about −28 dBFS by 1.25 s, decays smoothly to −64 dBFS at
+4.25 s, and is digital silence from 4.5 s until the voice at 5.0 s. After the narration's own 0.6 s
+room-tone fade-out (about 54.4 s), the end card is silent. The short is digital silence before 0.6 s,
+between the excerpts and over the end card. The excerpt edges keep their 3–4 frame fades, so there are no clicks.
+
+**Sync.** The narration sits at 5.0000 s in the full V2, with 0.0 ms error at both 1 s and 30 s into it.
+In the short, excerpt 1 is at +0.00 ms and excerpt 2 is at −16.7 ms. That is the same frame-rounded
+trim as in V1; it was preserved deliberately.

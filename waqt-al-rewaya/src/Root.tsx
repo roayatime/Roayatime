@@ -1,6 +1,7 @@
 import React from "react";
 import { Composition, Folder } from "remotion";
 import "./fonts";
+import { SELECTED_MIX } from "./audio/SoundDesign";
 import { FullVideo } from "./FullVideo";
 import { ShortVideo } from "./ShortVideo";
 import { S01Island } from "./scenes/S01Island";
@@ -49,8 +50,8 @@ const sceneComps = (suffix: string, width: number, height: number) =>
 
 export const RemotionRoot: React.FC = () => (
   <>
-    <Composition id="WaqtAlRewaya-Flannan-Full" component={FullVideo} width={1920} height={1080} fps={FPS} durationInFrames={FULL_DURATION} />
-    <Composition id="WaqtAlRewaya-Flannan-Short" component={ShortVideo} width={1080} height={1920} fps={FPS} durationInFrames={SHORT_DURATION} />
+    <Composition id="WaqtAlRewaya-Flannan-Full" component={FullVideo} width={1920} height={1080} fps={FPS} durationInFrames={FULL_DURATION} defaultProps={{ mix: SELECTED_MIX }} />
+    <Composition id="WaqtAlRewaya-Flannan-Short" component={ShortVideo} width={1080} height={1920} fps={FPS} durationInFrames={SHORT_DURATION} defaultProps={{ mix: SELECTED_MIX }} />
     <Folder name="Scenes-Landscape">{sceneComps("", 1920, 1080)}</Folder>
     <Folder name="Scenes-Portrait">{sceneComps("-V", 1080, 1920)}</Folder>
   </>

@@ -30,6 +30,9 @@
     "assets": "python3 scripts/edit_narration.py && python3 scripts/gen_textures.py && python3 scripts/gen_sfx.py",
     "render:full": "remotion render WaqtAlRewaya-Flannan-Full out/waqt-al-rewaya_flannan_full_1080p.mp4 --concurrency=4 --codec=h264 --crf=18 --pixel-format=yuv420p --color-space=bt709 --jpeg-quality=92 --audio-codec=aac --audio-bitrate=192k",
     "render:short": "remotion render WaqtAlRewaya-Flannan-Short out/waqt-al-rewaya_flannan_short_1080x1920.mp4 --concurrency=4 --codec=h264 --crf=18 --pixel-format=yuv420p --color-space=bt709 --jpeg-quality=92 --audio-codec=aac --audio-bitrate=192k",
-    "render:thumbs": "remotion still WaqtAlRewaya-Flannan-Full out/thumb_full.jpg --frame=600 --image-format=jpeg --jpeg-quality=95 && remotion still WaqtAlRewaya-Flannan-Short out/thumb_short.jpg --frame=40 --image-format=jpeg --jpeg-quality=95"
+    "render:thumbs": "remotion still WaqtAlRewaya-Flannan-Full out/thumb_full.jpg --frame=600 --image-format=jpeg --jpeg-quality=95 && remotion still WaqtAlRewaya-Flannan-Short out/thumb_short.jpg --frame=40 --image-format=jpeg --jpeg-quality=95",
+    "render:full:mix": "remotion render WaqtAlRewaya-Flannan-Full out/v2/full_v2_mix.wav --codec=wav",
+    "render:short:mix": "remotion render WaqtAlRewaya-Flannan-Short out/v2/short_v2_mix.wav --codec=wav",
+    "v2": "npm run render:full:mix && npm run render:short:mix && scripts/remix_audio.sh ../deliverables/waqt-al-rewaya_flannan_full_1080p.mp4 out/v2/full_v2_mix.wav -2.8 ../deliverables/v2/waqt-al-rewaya_flannan_full_1080p_v2_narration-first.mp4 && scripts/remix_audio.sh ../deliverables/waqt-al-rewaya_flannan_short_1080x1920.mp4 out/v2/short_v2_mix.wav -2.8 ../deliverables/v2/waqt-al-rewaya_flannan_short_1080x1920_v2_narration-first.mp4"
   }
 }

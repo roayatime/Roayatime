@@ -1,7 +1,7 @@
 import React from "react";
 import { Audio } from "@remotion/media";
 import { AbsoluteFill, Sequence, interpolate, staticFile, useCurrentFrame } from "remotion";
-import { Bed, Cue, SoundDesign, shiftKeys } from "./audio/SoundDesign";
+import { Bed, Cue, Mix, MixId, SELECTED_MIX, SoundDesign, shiftKeys } from "./audio/SoundDesign";
 import { Grain, Letterbox } from "./components/layers";
 import { Captions, ReconstructionTag } from "./components/text";
 import { S01Island } from "./scenes/S01Island";
@@ -39,8 +39,8 @@ const SHOTS: Shot[] = [
   { name: "End card", key: "endCard", Comp: S10EndCard, fade: 20 },
 ];
 
-// ---- Sound design, authored in narration time (c) and shifted by N ----
-const BEDS: Bed[] = [
+// ---- V1 "cinematic" sound design, authored in narration time (c) and shifted by N ----
+const CINEMATIC_BEDS: Bed[] = [
   {
     name: "ocean",
     src: "ocean_bed.wav",
@@ -58,7 +58,7 @@ const BEDS: Bed[] = [
   },
 ].map((b) => ({ ...b, keys: shiftKeys(b.keys as [number, number][], N) }));
 
-const CUES: Cue[] = [
+const CINEMATIC_CUES: Cue[] = [
   { name: "opening whoosh", src: "whoosh.wav", at: -4.8, volume: 0.25 },
   { name: "title hit", src: "low_hit.wav", at: -3.7, volume: 0.45 },
   { name: "flame out", src: "flame_out.wav", at: BEATS.lightOut - 0.03, volume: 0.75 },
@@ -70,7 +70,20 @@ const CUES: Cue[] = [
   { name: "end hit", src: "low_hit.wav", at: FULL_SCENES.endCard.from + 0.05, volume: 0.6 },
 ].map((c) => ({ ...c, at: c.at + N }));
 
-export const FullVideo: React.FC = () => {
+// ---- V2 "narration-first": ambience only during the title, silent before the first word ----
+// Ocean fades in over 0.6 s, holds, and is at zero by 4.4 s; the soft foghorn (0.5 s) is fully
+// decayed by ~3.5 s. Narration starts at N = 5.0 s; from then on only the cleaned narration plays.
+const NARRATION_FIRST: Mix = {
+  beds: [{ name: "ocean (title only)", src: "ocean_bed.wav", keys: [[0, 0], [0.6, 0.2], [2.8, 0.2], [4.4, 0]] }],
+  cues: [{ name: "distant foghorn (title only)", src: "foghorn_soft.wav", at: 0.5, volume: 0.16 }],
+};
+
+const MIXES: Record<MixId, Mix> = {
+  "narration-first": NARRATION_FIRST,
+  cinematic: { beds: CINEMATIC_BEDS, cues: CINEMATIC_CUES },
+};
+
+export const FullVideo: React.FC<{ mix?: MixId }> = ({ mix = SELECTED_MIX }) => {
   const tagFrom = f(N + 0.2);
   const tagTo = f(N + FULL_SCENES.endCard.from);
   return (
@@ -96,7 +109,7 @@ export const FullVideo: React.FC = () => {
       <Sequence name="Narration (cleaned)" from={f(N)} layout="none">
         <Audio src={staticFile("audio/narration_clean.wav")} />
       </Sequence>
-      <SoundDesign beds={BEDS} cues={CUES} />
+      <SoundDesign {...MIXES[mix]} />
     </AbsoluteFill>
   );
 };
