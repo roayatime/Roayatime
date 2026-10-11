@@ -1,0 +1,7 @@
+# Per-episode media stays out of the public repository (voices, generated speech, renders, licensed assets).
+*/audio/**
+*/renders/**
+*/assets/**
+!*/audio/.gitkeep
+!*/renders/.gitkeep
+!*/assets/.gitkeep

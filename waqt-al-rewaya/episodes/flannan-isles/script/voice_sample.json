@@ -1,0 +1,107 @@
+{
+ "episode": "flannan-isles",
+ "purpose": "Voice feasibility sample (first ~25 s of the lighthouse narration). Text = the narrator's own recorded wording; pauses = the narrator's own measured pauses, so AI and human pacing can be compared line by line.",
+ "status": "sample",
+ "lines": [
+  {
+   "id": "p01",
+   "paragraph": "opening",
+   "text": "تخيّل إنك مسؤول عن منارة في جزيرة بعيدة وسط البحر",
+   "pause_after": 1.2,
+   "reference_take_seconds": [
+    0.32,
+    3.22
+   ]
+  },
+  {
+   "id": "p02",
+   "paragraph": "keeper",
+   "text": "كل ليلة",
+   "pause_after": 0.64,
+   "reference_take_seconds": [
+    4.42,
+    4.98
+   ]
+  },
+  {
+   "id": "p03",
+   "paragraph": "keeper",
+   "text": "ومهمتك الوحيدة إنك تتأكد إن النور شغّال",
+   "pause_after": 1.03,
+   "reference_take_seconds": [
+    5.62,
+    8.22
+   ]
+  },
+  {
+   "id": "p04",
+   "paragraph": "keeper",
+   "text": "علشان السفن تعرف طريقها وسط الظلام",
+   "pause_after": 0.62,
+   "reference_take_seconds": [
+    9.25,
+    11.75
+   ]
+  },
+  {
+   "id": "p05",
+   "paragraph": "lightout",
+   "text": "بس في ليلة من الليالي",
+   "pause_after": 1.55,
+   "reference_take_seconds": [
+    12.37,
+    14.15
+   ]
+  },
+  {
+   "id": "p06",
+   "paragraph": "lightout",
+   "text": "النور بيختفي",
+   "pause_after": 1.22,
+   "reference_take_seconds": [
+    15.7,
+    16.56
+   ]
+  },
+  {
+   "id": "p07",
+   "paragraph": "ship",
+   "text": "وبعد أيام",
+   "pause_after": 0.76,
+   "reference_take_seconds": [
+    17.78,
+    18.58
+   ]
+  },
+  {
+   "id": "p08",
+   "paragraph": "ship",
+   "text": "بتوصل سفينة الجزيرة",
+   "pause_after": 0.44,
+   "reference_take_seconds": [
+    19.34,
+    20.72
+   ]
+  },
+  {
+   "id": "p09",
+   "paragraph": "ship",
+   "text": "عشان تطمّن على الرجالة اللي عايشين هناك",
+   "pause_after": 0.92,
+   "reference_take_seconds": [
+    21.16,
+    23.64
+   ]
+  },
+  {
+   "id": "p10",
+   "paragraph": "surprise",
+   "text": "لكن المفاجأة…",
+   "pause_after": 0.8,
+   "reference_take_seconds": [
+    24.56,
+    25.54
+   ]
+  }
+ ]
+}
