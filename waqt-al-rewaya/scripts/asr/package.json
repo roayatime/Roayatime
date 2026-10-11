@@ -1,0 +1,11 @@
+{
+  "name": "waqt-al-rewaya-asr",
+  "private": true,
+  "description": "Offline Whisper transcription used to reconstruct the narration text. Install with: npm install --ignore-scripts",
+  "type": "module",
+  "dependencies": {
+    "@huggingface/transformers": "4.3.1",
+    "sts-whisper-base": "1.0.0",
+    "sts-whisper-small": "1.0.0"
+  }
+}

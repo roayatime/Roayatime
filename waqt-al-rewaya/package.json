@@ -1,0 +1,35 @@
+{
+  "name": "waqt-al-rewaya",
+  "version": "1.0.0",
+  "description": "My Remotion video",
+  "repository": {},
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@remotion/cli": "4.0.534",
+    "@remotion/fonts": "4.0.534",
+    "@remotion/media": "4.0.534",
+    "@remotion/transitions": "4.0.534",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "remotion": "4.0.534"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "4.0.534",
+    "@types/react": "19.2.7",
+    "@types/web": "0.0.166",
+    "eslint": "9.39.5",
+    "prettier": "3.8.1",
+    "typescript": "5.9.3"
+  },
+  "scripts": {
+    "dev": "remotion studio",
+    "build": "remotion bundle",
+    "upgrade": "remotion upgrade",
+    "lint": "eslint src && tsc",
+    "assets": "python3 scripts/edit_narration.py && python3 scripts/gen_textures.py && python3 scripts/gen_sfx.py",
+    "render:full": "remotion render WaqtAlRewaya-Flannan-Full out/waqt-al-rewaya_flannan_full_1080p.mp4 --concurrency=4 --codec=h264 --crf=18 --pixel-format=yuv420p --color-space=bt709 --jpeg-quality=92 --audio-codec=aac --audio-bitrate=192k",
+    "render:short": "remotion render WaqtAlRewaya-Flannan-Short out/waqt-al-rewaya_flannan_short_1080x1920.mp4 --concurrency=4 --codec=h264 --crf=18 --pixel-format=yuv420p --color-space=bt709 --jpeg-quality=92 --audio-codec=aac --audio-bitrate=192k",
+    "render:thumbs": "remotion still WaqtAlRewaya-Flannan-Full out/thumb_full.jpg --frame=600 --image-format=jpeg --jpeg-quality=95 && remotion still WaqtAlRewaya-Flannan-Short out/thumb_short.jpg --frame=40 --image-format=jpeg --jpeg-quality=95"
+  }
+}

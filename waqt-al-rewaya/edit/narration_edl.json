@@ -1,0 +1,39 @@
+{
+  "source": "source/test1.m4a",
+  "sourceSha256": "2db4221cb9910cb3b1a5e14834648598411af1c2d729781ce6930b1b8c73f758",
+  "sampleRate": 48000,
+  "channel": "right",
+  "channelNote": "L/R are offset by 8 samples (0.17 ms); summing would comb-filter the voice (first notch ~3 kHz). Right channel has better SNR (28.8 dB vs 22.7 dB) and no flat-top clipping.",
+  "keep": [
+    {
+      "id": "A",
+      "srcStart": 9.2,
+      "srcEnd": 26.55,
+      "note": "Breath before the complete opening line through 'النور بيختفي' and ~0.8 s of the natural dramatic pause after it."
+    },
+    {
+      "id": "B",
+      "srcStart": 35.55,
+      "srcEnd": 67.6,
+      "note": "Second (complete) take of the ship sentence through the closing question, plus ~1 s room tone for the fade-out."
+    }
+  ],
+  "discarded": [
+    { "srcStart": 0.0, "srcEnd": 6.6, "reason": "Room tone / handling noise before speech." },
+    { "srcStart": 6.6, "srcEnd": 8.3, "reason": "Incomplete opening attempt ('تخيل إنك مسؤول عن منا…'), restarted at 9.5 s." },
+    { "srcStart": 8.3, "srcEnd": 9.2, "reason": "Gap between false start and restart." },
+    { "srcStart": 26.55, "srcEnd": 32.6, "reason": "Take 1 of the ship sentence; contains a stumble ('على الرجال… على الرجالة'). Take 2 is preferred." },
+    { "srcStart": 32.6, "srcEnd": 34.45, "reason": "Spoken editing marker 'إعادة' (34.0–34.4 s) and surrounding silence." },
+    { "srcStart": 34.45, "srcEnd": 35.55, "reason": "Silence before take 2." },
+    { "srcStart": 67.6, "srcEnd": 70.59, "reason": "Excess trailing room tone." }
+  ],
+  "crossfadeSec": 0.04,
+  "fadeInSec": 0.06,
+  "fadeOutSec": 0.6,
+  "processing": {
+    "highpassHz": 80,
+    "denoise": "afftdn nr=8 nf=-56 (conservative, spectral; noise floor measured at -56 dBFS RMS)",
+    "compressor": "acompressor threshold=-24dB ratio=2:1 attack=8ms release=180ms (gentle, keeps performance dynamics)",
+    "loudness": "loudnorm two-pass, linear mode, I=-17 LUFS, TP=-1.5 dBTP, LRA=11"
+  }
+}

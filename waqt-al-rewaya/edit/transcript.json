@@ -1,0 +1,138 @@
+{
+ "note": "Times are seconds in public/audio/narration_clean.wav. Phrase boundaries from the recording's energy envelope (25 ms). Text: local Whisper small/base (multiple decodes), reviewed by hand. confidence=medium means ASR hypotheses disagreed; verify by ear.",
+ "phrases": [
+  {
+   "start": 0.32,
+   "end": 3.22,
+   "text": "تخيّل إنك مسؤول عن منارة في جزيرة بعيدة وسط البحر",
+   "confidence": "high"
+  },
+  {
+   "start": 4.42,
+   "end": 4.98,
+   "text": "كل ليلة",
+   "confidence": "high"
+  },
+  {
+   "start": 5.62,
+   "end": 8.22,
+   "text": "ومهمتك الوحيدة إنك تتأكد إن النور شغّال",
+   "confidence": "high"
+  },
+  {
+   "start": 9.25,
+   "end": 11.75,
+   "text": "علشان السفن تعرف طريقها وسط الظلام",
+   "confidence": "medium"
+  },
+  {
+   "start": 12.37,
+   "end": 14.15,
+   "text": "بس في ليلة من الليالي",
+   "confidence": "high"
+  },
+  {
+   "start": 15.7,
+   "end": 16.56,
+   "text": "النور بيختفي",
+   "confidence": "high"
+  },
+  {
+   "start": 17.78,
+   "end": 18.58,
+   "text": "وبعد أيام",
+   "confidence": "high"
+  },
+  {
+   "start": 19.34,
+   "end": 20.72,
+   "text": "بتوصل سفينة الجزيرة",
+   "confidence": "high"
+  },
+  {
+   "start": 21.16,
+   "end": 23.64,
+   "text": "عشان تطمّن على الرجالة اللي عايشين هناك",
+   "confidence": "high"
+  },
+  {
+   "start": 24.56,
+   "end": 25.54,
+   "text": "لكن المفاجأة…",
+   "confidence": "high"
+  },
+  {
+   "start": 27.68,
+   "end": 29.8,
+   "text": "مفيش حد بيرد",
+   "confidence": "high"
+  },
+  {
+   "start": 30.71,
+   "end": 31.74,
+   "text": "المنارة موجودة",
+   "confidence": "high"
+  },
+  {
+   "start": 32.53,
+   "end": 33.85,
+   "text": "والجزيرة موجودة",
+   "confidence": "high"
+  },
+  {
+   "start": 34.31,
+   "end": 35.76,
+   "text": "لكن الرجالة التلاتة",
+   "confidence": "high"
+  },
+  {
+   "start": 36.16,
+   "end": 36.58,
+   "text": "اختفوا",
+   "confidence": "high"
+  },
+  {
+   "start": 38.38,
+   "end": 40.08,
+   "text": "والسؤال هنا مش بس هما راحوا فين",
+   "confidence": "medium"
+  },
+  {
+   "start": 41.14,
+   "end": 42.01,
+   "text": "السؤال الحقيقي",
+   "confidence": "high"
+  },
+  {
+   "start": 42.76,
+   "end": 44.06,
+   "text": "إيه اللي ممكن يخلّي",
+   "confidence": "high"
+  },
+  {
+   "start": 44.06,
+   "end": 46.21,
+   "text": "تلات رجالة يختفوا من مكان زي ده",
+   "confidence": "high"
+  },
+  {
+   "start": 46.74,
+   "end": 48.36,
+   "text": "من غير ما حد يقدر ينقذهم؟",
+   "confidence": "high"
+  }
+ ],
+ "shortExcerpts": [
+  {
+   "cFrom": 12.2,
+   "cTo": 37.3,
+   "at": 0.6
+  },
+  {
+   "cFrom": 42.55,
+   "cTo": 49.36,
+   "at": 26.2
+  }
+ ],
+ "fullOffset": 5.0
+}
