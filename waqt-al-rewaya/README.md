@@ -7,7 +7,12 @@ Remotion project that turns the narrator's original recording (`source/test1.m4a
 | Full YouTube video | `WaqtAlRewaya-Flannan-Full` | 1920×1080, 30 fps, H.264 + AAC |
 | Vertical teaser | `WaqtAlRewaya-Flannan-Short` | 1080×1920, 30 fps, H.264 + AAC |
 
-Rendered files, subtitles, thumbnails and the cleaned narration are in [`deliverables/`](deliverables/).
+Rendered, mastered files, subtitles, thumbnails and the cleaned narration are in [`../deliverables/`](../deliverables/).
+Mastering for delivery: `scripts/master.sh <render.mp4> <final.mp4>`.
+
+> **Privacy:** this folder contains the narrator's real voice (`source/test1.m4a`, the cleaned narration,
+> and both videos). If the repository is public, those recordings are public too. See PRODUCTION_REPORT.md §7.
+
 How the edit was made is in [PRODUCTION_REPORT.md](PRODUCTION_REPORT.md). Asset rights are in [ATTRIBUTION.md](ATTRIBUTION.md).
 
 ## Layout

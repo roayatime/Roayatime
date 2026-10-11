@@ -112,7 +112,45 @@ This is a new vertical edit, not a crop of the 16:9 video. Every scene re-lays o
 
 ## 5. Rendering report
 
-RENDER_STATS_PLACEHOLDER
+Measured on the delivered files (ffprobe / ffmpeg ebur128 / full decode), 2026-10-11.
+
+| | Full video | Vertical short |
+|---|---|---|
+| Path | `deliverables/waqt-al-rewaya_flannan_full_1080p.mp4` | `deliverables/waqt-al-rewaya_flannan_short_1080x1920.mp4` |
+| Resolution / aspect | 1920×1080, 16:9 (SAR 1:1) | 1080×1920, 9:16 (SAR 1:1) |
+| Duration / frames | 60.501 s / 1815 frames | 36.010 s / 1080 frames |
+| Frame rate | 30 fps (constant) | 30 fps (constant) |
+| Video | H.264 High, yuv420p, BT.709, ~7.7 Mb/s | H.264 High, yuv420p, BT.709, ~11.0 Mb/s |
+| Audio | AAC-LC, 48 kHz stereo, ~200 kb/s | AAC-LC, 48 kHz stereo, ~200 kb/s |
+| File size | 59,940,514 bytes (57.2 MiB) | 50,417,336 bytes (48.1 MiB) |
+| Loudness | −15.0 LUFS integrated, −1.3 dBFS peak | −14.9 LUFS integrated, −1.2 dBFS peak |
+| Full decode (`ffmpeg -v error -f null`) | no errors | no errors |
+
+**Pipeline.** `remotion render` (Remotion 4.0.534, Chromium headless shell 1194, concurrency 4,
+JPEG q92 frames, x264 CRF 18) followed by `scripts/master.sh` (alimiter at −1.5 dBFS, x264 CRF 20
+slow, `+faststart`). The raw Remotion renders peaked at +0.02 dBFS and were 103.8 MB / 87.4 MB.
+The mastering pass removes the overs and keeps each file under GitHub's 100 MB limit.
+
+**Render time on this 4-vCPU container:** full video ≈ 35 min, short ≈ 22 min, mastering ≈ 5 min each.
+
+**Review copies** (`deliverables/review/`) are a second x264 pass at 3.4 Mb/s (full) and 4.8 Mb/s
+(short), at the same resolution. They exist only to fit the 30 MiB chat attachment limit. Use
+the masters for publishing.
+
+**A/V sync (measured).** The cleaned narration was cross-correlated against the final mixed audio.
+- Full video: narration found at 5.003 s, against 5.000 s expected. The same +3 ms holds 30 s later
+  (35.003 s), so there is no drift. The 3 ms is the AAC encoder delay, about 0.1 frame.
+- Short: excerpt 1 is off by +3 ms. Excerpt 2 is off by −13.7 ms because its trim point is rounded
+  to a whole frame (under half a frame).
+- Captions, scene cuts and sound cues are all derived from the same `edit/transcript.json` times.
+
+**Arabic text (visually verified on frames decoded from the final MP4s).** The title, brand,
+captions, labels and keeper names all render with joined letters and right-to-left order, inside
+the safe margins, in both orientations.
+
+**Mix.** Speech sections measure about −14.3 LUFS short-term. The ambience alone (title section)
+measures −23.4 LUFS, so the narrator sits about 9 dB above the beds. Beds are ducked further
+inside the interiors, and the mix drops to silence after «اختفوا».
 
 ## 6. Environment and limits
 
@@ -124,3 +162,23 @@ RENDER_STATS_PLACEHOLDER
 | MP4 export | Yes: real H.264/AAC files, verified with ffprobe |
 | Network | npm and PyPI reachable. Hugging Face, the OpenAI CDN, Wikimedia and Google Fonts (from inside the headless browser) are blocked. So there is no archival imagery: every visual is an original reconstruction, and the fonts are bundled locally. |
 | Paid services | None used |
+
+## 7. Privacy: the original recording is in a public repository
+
+`waqt-al-rewaya/source/test1.m4a` (the unedited take, including the false start, the discarded take and
+the spoken «إعادة»), `public/audio/narration_clean.wav`, `edit/narration_raw_cut.wav` and both MP4s
+contain the narrator's real voice. If `roayatime/Roayatime` is public, anyone can download them, and
+they stay in Git history even if the files are deleted later. **No destructive Git action was taken.**
+
+Options, from least to most invasive. The repository owner decides.
+1. **Make the repository private** (GitHub → Settings → General → Danger Zone → Change visibility).
+   Nothing is rewritten, and this takes effect immediately for new visitors.
+2. **Keep the repository public but stop tracking the audio from now on.** Remove the files in a new
+   commit and add them to `.gitignore`. Note that they **remain in history** on this branch.
+3. **Purge the files from history** with `git filter-repo --path waqt-al-rewaya/source/test1.m4a --invert-paths`
+   (repeat for the other audio files), then force-push. This rewrites the branch, so anyone with a clone
+   must re-clone. Forks, caches and existing clones keep the old data, and GitHub Support can be asked to
+   purge cached views. If a recording has already been exposed and matters, treat it as published.
+
+To keep the project reproducible without committing the voice, store `source/test1.m4a` outside Git and
+copy it in before running `npm run assets`. `scripts/edit_narration.py` checks its SHA-256 before every edit.

@@ -1,0 +1,5 @@
+# Videos and audio contain the narrator's voice and are kept out of this (public) repository.
+# Regenerate with: npm run render:full / render:short, then scripts/master.sh
+*.mp4
+*.wav
+*.m4a
