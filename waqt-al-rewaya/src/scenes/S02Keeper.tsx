@@ -5,7 +5,7 @@ import { KeeperSilhouette } from "../components/scenery";
 import { Camera, SceneProps, useScene } from "./common";
 
 /** Rotating dioptric lens (stylized), drawn as a cylinder with prism rings and bullseye panels. */
-const Lens: React.FC<{ cx: number; cy: number; w: number; h: number; t: number; glow: number }> = ({ cx, cy, w, h, t, glow }) => {
+export const Lens: React.FC<{ cx: number; cy: number; w: number; h: number; t: number; glow: number }> = ({ cx, cy, w, h, t, glow }) => {
   const rot = t * 0.55;
   const top = cy - h / 2;
   const belt = h * 0.3;

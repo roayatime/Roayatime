@@ -7,3 +7,8 @@ dist
 out
 
 __pycache__
+
+# Private production media (owner voice, logo copy, music) - never commit
+public/private/
+src/flannan/data/full.json
+src/flannan/data/teaser.json

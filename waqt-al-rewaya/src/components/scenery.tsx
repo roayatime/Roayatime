@@ -55,7 +55,8 @@ export const Island: React.FC<{ g: IslandGeom; light: number; seed?: string; haz
   const brightness = 0.25 + light * 0.75;
   return (
     <>
-      <TexturedShape path={islandPath(g, seed)} src={tex("rock.png")} tile={700} filter={`brightness(${brightness}) contrast(1.1)`}>
+      <TexturedShape path={islandPath(g, seed)} src={tex("rock.png")} tile={700}>
+        <div style={{ position: "absolute", inset: 0, background: "#000", opacity: 1 - brightness }} />
         <div
           style={{
             position: "absolute",
@@ -64,7 +65,9 @@ export const Island: React.FC<{ g: IslandGeom; light: number; seed?: string; haz
           }}
         />
       </TexturedShape>
-      <TexturedShape path={turfPath(g, seed)} src={tex("turf.png")} tile={600} filter={`brightness(${brightness * 0.9})`} />
+      <TexturedShape path={turfPath(g, seed)} src={tex("turf.png")} tile={600}>
+        <div style={{ position: "absolute", inset: 0, background: "#000", opacity: 1 - brightness * 0.9 }} />
+      </TexturedShape>
       {haze ? (
         <div style={{ position: "absolute", inset: 0, clipPath: `path('${islandPath(g, seed)}')`, background: haze }} />
       ) : null}

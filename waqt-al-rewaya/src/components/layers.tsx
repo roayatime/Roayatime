@@ -2,6 +2,8 @@ import React from "react";
 import { AbsoluteFill, Img, interpolate, random, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
 
 export const tex = (name: string) => staticFile(`textures/${name}`);
+/** Film grain is added in the FFmpeg post-pass for the Phase 7 renders (much cheaper than a per-frame blend). */
+export const GRAIN_IN_POST = true;
 
 const mod = (a: number, n: number) => ((a % n) + n) % n;
 
@@ -52,6 +54,7 @@ export const TiledImage: React.FC<{
 /** Animated film grain + gentle exposure flicker. */
 export const Grain: React.FC<{ opacity?: number }> = ({ opacity = 0.16 }) => {
   const frame = useCurrentFrame();
+  if (GRAIN_IN_POST) return null;
   const flicker = 1 + (random(`flick-${frame}`) - 0.5) * 0.03;
   return (
     <AbsoluteFill style={{ pointerEvents: "none" }}>
@@ -210,12 +213,12 @@ export const Sea: React.FC<{ horizonY: number; tint: string; haze?: string; spee
           height: planeH,
           transformOrigin: "50% 0%",
           transform: "rotateX(72deg)",
-          filter: `brightness(${brightness})`,
           overflow: "hidden",
         }}
       >
         {tiles}
       </div>
+      <AbsoluteFill style={{ background: "#000", opacity: 1 - brightness }} />
       <AbsoluteFill style={{ background: tint, mixBlendMode: "multiply" }} />
       <AbsoluteFill style={{ background: `linear-gradient(180deg, ${haze ?? tint} 0%, rgba(0,0,0,0) 22%)`, opacity: 0.9 }} />
       {glint > 0 && glintX !== undefined ? (
@@ -245,7 +248,7 @@ export const Fog: React.FC<{ y: number; height: number; strength: number; speed?
   const tileW = height * (2048 / 768);
   return (
     <>
-      <TiledImage src={tex("fog_a.png")} tileW={tileW} tileH={height} top={y} height={height} offsetX={t * speed + seed * 700} opacity={strength} blend="screen" fadeEdges={[0.2, 0.2]} />
+      <TiledImage src={tex("fog_a.png")} tileW={tileW} tileH={height} top={y} height={height} offsetX={t * speed + seed * 700} opacity={strength * 0.85} fadeEdges={[0.2, 0.2]} />
       <TiledImage
         src={tex("fog_b.png")}
         tileW={tileW * 1.3}
@@ -253,8 +256,7 @@ export const Fog: React.FC<{ y: number; height: number; strength: number; speed?
         top={y + height * 0.25}
         height={height}
         offsetX={-t * speed * 0.6 + seed * 300}
-        opacity={strength * 0.8}
-        blend="screen"
+        opacity={strength * 0.7}
         fadeEdges={[0.2, 0.2]}
       />
     </>
