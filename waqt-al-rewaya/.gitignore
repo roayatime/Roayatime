@@ -12,3 +12,4 @@ __pycache__
 public/private/
 src/flannan/data/full.json
 src/flannan/data/teaser.json
+src/flannan3d/data/

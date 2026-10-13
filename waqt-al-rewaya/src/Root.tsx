@@ -4,6 +4,7 @@ import "./fonts";
 import { SELECTED_MIX } from "./audio/SoundDesign";
 import { FullVideo } from "./FullVideo";
 import { FlannanCompositions } from "./flannan/Compositions";
+import { Flannan3DCompositions } from "./flannan3d/Compositions";
 import { ShortVideo } from "./ShortVideo";
 import { S01Island } from "./scenes/S01Island";
 import { S02Keeper } from "./scenes/S02Keeper";
@@ -54,6 +55,7 @@ export const RemotionRoot: React.FC = () => (
     <Composition id="WaqtAlRewaya-Flannan-Full" component={FullVideo} width={1920} height={1080} fps={FPS} durationInFrames={FULL_DURATION} defaultProps={{ mix: SELECTED_MIX }} />
     <Composition id="WaqtAlRewaya-Flannan-Short" component={ShortVideo} width={1080} height={1920} fps={FPS} durationInFrames={SHORT_DURATION} defaultProps={{ mix: SELECTED_MIX }} />
     <FlannanCompositions />
+    <Flannan3DCompositions />
     <Folder name="Scenes-Landscape">{sceneComps("", 1920, 1080)}</Folder>
     <Folder name="Scenes-Portrait">{sceneComps("-V", 1080, 1920)}</Folder>
   </>
