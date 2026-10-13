@@ -217,8 +217,8 @@ export const SHOTS: Record<string, ShotFn> = {
         { look: CAST.macarthur, pos: pp(1.9, -1.4), rotY: face - 0.2 },
       ],
       cam: [
-        { t: 0, pos: [pp(5.5, 6)[0], y + 2.2, pp(5.5, 6)[2]], look: [pp(0.4, 0)[0], y + 1.4, pp(0.4, 0)[2]], fov: 40 },
-        { t: a.D, pos: [pp(4.5, 4.6)[0], y + 1.9, pp(4.5, 4.6)[2]], look: [pp(0.2, 0)[0], y + 1.4, pp(0.2, 0)[2]], fov: 38 },
+        { t: 0, pos: [pp(-9, 5)[0], y + 2.6, pp(-9, 5)[2]], look: [pp(0.6, 0)[0], y + 1.5, pp(0.6, 0)[2]], fov: 38 },
+        { t: a.D, pos: [pp(-7.5, 3.5)[0], y + 2.3, pp(-7.5, 3.5)[2]], look: [pp(0.6, 0)[0], y + 1.5, pp(0.6, 0)[2]], fov: 36 },
       ],
       drift: 0.08, shadows: true,
     });
@@ -370,7 +370,7 @@ export const SHOTS: Record<string, ShotFn> = {
     const c = off([Wl.cx, Wl.cz], Wl.n, Wl.t, -6, 0);
     return W(a, {
       mood: "storm", storm: 2.6, rain: 0.9, lampOn: 0, damageWest: 1, flash: a.p.flashAt !== undefined ? Math.max(0, 1 - Math.abs(a.t - a.p.flashAt) * 4) : 0,
-      spray: [0, 1, 2].map((i) => ({ at: [c[0] + Wl.t[0] * (i - 1) * 25, 0, c[1] + Wl.t[1] * (i - 1) * 25] as V3, period: 4.5 + i, size: 1.8, phase: i * 1.7 })),
+      spray: [0, 1, 2].map((i) => ({ at: [c[0] + Wl.t[0] * (i - 1) * 25, 0, c[1] + Wl.t[1] * (i - 1) * 25] as V3, period: 4.5 + i, size: 0.8, phase: i * 1.7 })),
       cam: [
         { t: 0, pos: [c[0] - Wl.n[0] * 70 + Wl.t[0] * 40, 6, c[1] - Wl.n[1] * 70 + Wl.t[1] * 40], look: [c[0], 14, c[1]], fov: 42 },
         { t: a.D, pos: [c[0] - Wl.n[0] * 55 + Wl.t[0] * 20, 9, c[1] - Wl.n[1] * 55 + Wl.t[1] * 20], look: [c[0], 18, c[1]], fov: 38 },
