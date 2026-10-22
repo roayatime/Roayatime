@@ -1,0 +1,14 @@
+[Unit]
+Description=Lead Miner daily run
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=__USER__
+WorkingDirectory=__DIR__
+EnvironmentFile=-/etc/lead-miner.env
+ExecStart=__DIR__/.venv/bin/python -m leadminer run
+# A full run can take a while (each place is opened one by one).
+TimeoutStartSec=6h
+Nice=10

@@ -1,0 +1,11 @@
+[Unit]
+Description=Run Lead Miner every morning
+
+[Timer]
+OnCalendar=*-*-* 07:00:00
+# Run at boot if the server was off at 07:00.
+Persistent=true
+RandomizedDelaySec=15min
+
+[Install]
+WantedBy=timers.target

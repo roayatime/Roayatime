@@ -1,0 +1,41 @@
+# Copy to config/campaigns.yaml and edit. Every enabled campaign runs each morning.
+#
+# target:   companies | real_estate | custom  (steers how the AI words its searches)
+# goal:     describe the ideal lead in your own words, any language. The AI
+#           invents extra search queries from it and scores every result 0-100.
+# keywords: your own search terms. They always run, AI or not.
+# sources:  google_maps and/or linkedin (LinkedIn via public web search, no login)
+# fields:   columns in the output file, in this order. Allowed:
+#           name category phone website address rating reviews maps_url latitude
+#           longitude plus_code email facebook instagram linkedin twitter tiktok
+#           whatsapp source query score reason
+#           (email and social fields are found by visiting each lead's website)
+
+campaigns:
+  - name: cairo-software-companies
+    target: companies
+    goal: "شركات برمجيات وتطوير تطبيقات صغيرة ومتوسطة في القاهرة، مش شركات كبيرة عالمية"
+    keywords: ["شركة برمجيات", "software company", "mobile app development"]
+    locations: ["New Cairo", "Nasr City", "Maadi"]
+    sources: [google_maps, linkedin]
+    linkedin_lookup: true
+    fields: [name, category, phone, website, email, linkedin, facebook, address, rating, reviews, maps_url, score, reason]
+    filters:
+      min_rating: 3.5
+      must_have: [phone]
+      exclude_words: ["training", "كورسات"]
+      min_score: 60
+    max_results_per_query: 40
+    max_queries: 12
+
+  - name: sahel-chalets-for-rent
+    target: real_estate
+    goal: "شاليهات وفيلات للإيجار في الساحل الشمالي، مكاتب عقارات أو ملاك بيأجروا مباشرة"
+    keywords: ["شاليهات للإيجار", "chalets for rent", "مكتب عقارات"]
+    locations: ["الساحل الشمالي", "مارينا العلمين", "سيدي عبد الرحمن"]
+    fields: [name, category, phone, whatsapp, website, address, rating, reviews, maps_url, score, reason]
+    filters:
+      must_have: [phone]
+      min_score: 50
+    max_results_per_query: 30
+    max_queries: 10
